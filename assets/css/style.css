@@ -1,0 +1,28 @@
+body{
+    background-image: url(../images/brickwall.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-size: 100%;
+}
+.container {
+    background-image: url(../images/blackboard.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 800px;
+}
+.col{
+    text-align: center;
+}
+
+.button{
+    padding: 200px;
+}
+p, h1, h2{
+    color: white;
+}
+.game_area{
+    margin-top: 100px;
+}
+.game_area > div {
+    padding : 10px;
+}

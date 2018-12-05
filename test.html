@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Trivia Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script src="assets/javascript/app.js"></script> -->
+</head>
+<body>
+
+    <div class="container">
+        <br><br><br><br>
+        <div class="row">
+            <div class="col">
+                <h1>Totally Trivial Trivia !</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col game_area">
+                <div class="time_sec"></div>
+                <div class="question_sec"></div>
+                <div class="examples_sec"></div>
+                <div class="answer_sec"></div>
+                <button id="start" type="button" class="btn btn-light">Start!</button>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <script>
+        $(document).ready(function(){
+            $("#start").on("click", function(){
+                game.gamestart();
+            });
+        });
+
+        var questions = [
+        {
+            question : "What was the first length CGI movie?",
+            examples : ["A Bug's Life", "Monsters Inc.", "Toy Story", "The Lion King"],
+            answer : "Toy Story"
+            }, 
+
+        {
+            question : "What was the first length CGI movie?",
+            examples : ["A Bug's Life", "Monsters Inc.", "Toy Story", "The Lion King"],
+            answer : "Toy Story"
+            }
+        ];
+
+        var game = {
+
+            time: 15,
+            intervalId: null,
+            q_arr: 0,
+            q_wins: 0,
+            q_loses: 0,
+            
+
+
+            gamestart: function() {
+                $("#start").hide();
+                game.make_question();
+
+
+            }, 
+
+            correct_answer: function(){
+                game.q_wins++;
+                game.q_arr++;
+                clearInterval(game.intervalId);
+                $(".question_sec").empty();
+                $(".examples_sec").empty();
+                $(".answer_sec").html("<h2>Correct!!</h2>");
+                setTimeout(game.make_question, 2* 1000);
+
+                
+
+            },
+
+            wrong_answer: function(str){
+                game.q_loses++;
+                game.q_arr++;
+                clearInterval(game.intervalId);
+                $(".question_sec").empty();
+                $(".examples_sec").empty();
+                if(game.time===0){
+                    $(".answer_sec").html("<h2>Out of Time !</h2><p>correct answer is : "+str+ " </p>");
+                } else {
+                    $(".answer_sec").html("<h2>Nope!</h2><p>correct answer is : "+str+ " </p>");
+                }
+                setTimeout(game.make_question, 2* 1000);
+                
+                
+            },
+
+            make_question: function(){
+                $(".answer_sec").empty();
+                game.time_start();
+
+
+                //show question
+                
+                $(".question_sec").append("<p>"+questions[game.q_arr].question+"</p>");
+                
+                //show examples                    
+                for(var i=0; i<questions[game.q_arr].examples.length; i++){
+            
+                    var test = $("<p>").addClass("eg");
+                    test.append(questions[game.q_arr].examples[i]);
+            
+                $(".examples_sec").append(test);
+                };
+                
+
+                //click answer
+                $(".eg").on("click", function(){
+                    var user_answer = $(this).text();
+                    alert(game.q_arr);
+                    alert(questions[game.q_arr].examples.length+"length");
+                    alert(questions[game.q_arr].answer);
+                    if(user_answer===questions[game.q_arr].answer){
+                        game.correct_answer();
+                
+                        //answer is wrong
+                    } else {
+                        game.wrong_answer(questions[game.q_arr].answer);
+                    }
+
+                
+                });          
+
+            },
+
+
+
+
+            time_start: function() { 
+                game.time = 15; 
+                $(".time_sec").html("<p>Time Remaining : "+game.time+" seconds </p>");
+                
+                game.intervalId = setInterval(game.time_count,  1000);
+            },
+
+            time_count: function(){
+                game.time--;      
+                $(".time_sec").html("<p>Time Remaining : "+game.time+" seconds </p>");
+                if(game.time===0){
+                    game.wrong_answer(questions[game.q_arr].answer);
+                    
+                } 
+    
+            }
+        
+        }
+
+
+    
+    
+    </script>
+    
+
+    
+</body>
+</html>

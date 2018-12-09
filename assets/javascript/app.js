@@ -159,9 +159,6 @@ $(document).ready(function(){
                     game.finish_restart();
                 }
 
-
-
-
                 //show question
                 $(".question_sec").append("<h3>"+questions[game.q_arr].question+"</h3>");
                 
